@@ -1,0 +1,322 @@
+day = eval(input("Please enter a day: "))
+month = input("Please enter a month (Ex. Jan or January): ")
+year = eval(input("Please enter a year: "))
+
+user_date = [day, month, year]
+
+# Determine if it's a leap year
+if year % 400 == 0:
+    is_leap_year = True
+elif year % 100 == 0:
+    is_leap_year = False
+elif year % 4 == 0:
+    is_leap_year = True
+else:
+    is_leap_year = False
+
+# Help with Step 5
+if month == 'Jan' or month == 'January' or month == 'Feb' or month == 'February':
+    if is_leap_year == True:
+        step5ish = True
+    else:
+        step5ish = False
+else:
+    step5ish = False
+
+
+# Get Month's Value
+if month == 'Jan' or month == 'January':
+    month = 1
+elif month == 'Feb' or month == 'February':
+    month = 4
+elif month == 'Mar' or month == 'March':
+    month = 4
+elif month == 'Apr' or month == 'April':
+    month = 0
+elif month == 'May':
+    month = 2
+elif month == 'Jun' or month == 'June':
+    month = 5
+elif month == 'Jul' or month == 'July':
+    month = 0
+elif month == 'Aug' or month == 'August':
+    month = 3
+elif month == 'Sep' or month == 'September':
+    month = 6
+elif month == 'Oct' or month == 'October':
+    month = 1
+elif month == 'Nov' or month == 'November':
+    month = 4
+elif month == 'Dec' or month == 'December':
+    month = 6
+else:
+    print("Invalid Input")
+
+    
+## Actual Calculations
+
+step1 = year % 100 # get last two digits
+
+step2 = step1 // 4
+step3 = step2 + day
+step4 = step3 + month
+
+# Account for Jan or Feb in Leap Year
+if step5ish == True:
+    step5 = step4 - 1
+else:
+    step5 = step4
+
+# Get years between 1700 and 2099    
+while year > 2099:
+    year = year - 400
+    
+while year < 1700:
+    year = year + 400
+
+    
+# Add amount based on century 
+step6 = int(str(year)[:2]) # get first two digits
+
+if step6 == 19:
+    step6 = step5 
+elif step6 == 20:
+    step6 = step5 + 6
+elif step6 == 17:
+    step6 = step5 + 4
+elif step6 == 18:
+    step6 = step5 + 2
+else:
+    print("Something went wrong")
+
+    
+step7 = step6 + step1 # Add back original date
+step8 = step7 % 7 # Take remainder
+
+
+# Display the Day of the Week    
+if step8 == 1:
+    day_of_week = "Sunday."
+elif step8 == 2:
+    day_of_week =  "Monday."
+elif step8 == 3:
+    day_of_week = "Tuesday."
+elif step8 == 4:
+    day_of_week = "Wednesday."
+elif step8 == 5:
+    day_of_week = "Thursday."
+elif step8 == 6:
+    day_of_week = "Friday."
+elif step8 == 7 or step8 == 0:
+    day_of_week = "Saturday."
+else:
+    day_of_week = "Error"
+    
+# Change month to standard format
+if user_date[1] == 'Jan' or user_date[1] == 'January':
+    user_date[1] = ("January" + ",")
+elif user_date[1] == 'Feb' or user_date[1] == 'February':
+    user_date[1] = ("February" + ",")
+elif user_date[1] == 'Mar' or user_date[1] == 'March':
+    user_date[1] = ("March" + ",")
+elif user_date[1] == 'Apr' or user_date[1] == 'April':
+    user_date[1] = ("April" + ",")
+elif user_date[1] == 'May':
+    user_date[1] = ("May" + ",")
+elif user_date[1] == 'Jun' or user_date[1] == 'June':
+    user_date[1] = ("June" + ",")
+elif user_date[1] == 'Jul' or user_date[1] == 'July':
+    user_date[1] = ("July" + ",")
+elif user_date[1] == 'Aug' or user_date[1] == 'August':
+    user_date[1] = ("August" + ",")
+elif user_date[1] == 'Sep' or user_date[1] == 'September':
+    user_date[1] = ("September" + ",")
+elif user_date[1] == 'Oct' or user_date[1] == 'October':
+    user_date[1] = ("October" + ",")
+elif user_date[1] == 'Nov' or user_date[1] == 'November':
+    user_date[1] = ("November" + ",")
+elif user_date[1] == 'Dec' or user_date[1] == 'December':
+    user_date[1] = ("December" + ",")
+else:
+    pass
+
+# Assist in listing holidays
+is_holiday = False
+
+# Determine if date was on Thanksgiving
+if day_of_week == 'Thursday' and user_date[1] == 'November,' and day >= 22 and day <= 28:
+    holiday = 'Thanksgiving.'
+    is_holiday = True
+else:
+    pass
+    
+# Determine if date was on Memorial Day    
+if day_of_week == 'Monday' and user_date[1] == 'May,' and day >= 25:
+    holiday = 'Memorial Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on April Fools
+if day == 1 and user_date[1] == 'April,':
+    holiday = 'April Fools.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on NYE
+if day == 31 and user_date[1] == 'December,':
+    holiday = 'New Year\'s Eve.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on New Year Day
+if day == 1 and user_date[1] == 'January,':
+    holiday = 'New Year\'s Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on MLK Day
+if user_date[1] == 'January,' and day >= 15 and day <= 21 and day_of_week == 'Monday':
+    holiday = 'Martin Luther King Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on President's Day
+if user_date[1] == 'February,' and day >= 15 and day <= 21 and day_of_week == 'Monday':
+    holiday = 'President\s Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on Labor Day
+if user_date[1] == 'September,' and day >= 1 and day <= 7 and day_of_week == 'Monday':
+    holiday = 'Labor Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on Mother's Day
+if user_date[1] == 'May,' and day >= 8 and day <= 14 and day_of_week == 'Sunday':
+    holiday = 'Mother\'s Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on Father's Day
+if user_date[1] == 'June,' and day >= 15 and day <= 21 and day_of_week == 'Sunday':
+    holiday = 'Father\'s Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on Christmas
+if user_date[1] == 'December,' and day == 25:
+    holiday = 'Christmas.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on Christmas Eve
+if user_date[1] == 'December,' and day == 24:
+    holiday = 'Christmas Eve.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was 4th of July
+if user_date[1] == 'July,' and day == 4:
+    holiday = 'Fourth of July.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was Halloween
+if user_date[1] == 'October,' and day == 31:
+    holiday = 'Halloween.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on Valentine's Day
+if user_date[1] == 'February,' and day == 14:
+    holiday = 'Valentine\'s Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was on St Patrick's Day
+if user_date[1] == 'March,' and day == 17:
+    holiday = 'St. Patrick\'s Day.'
+    is_holiday = True
+else:
+    pass
+
+# Determine if date was Cinco De Mayo
+if user_date[1] == 'May,' and day == 5:
+    holiday = 'Cinco de Mayo.'
+    is_holiday = True
+else:
+    pass
+
+# Determine what sign it was
+if user_date[1] == 'March,' and day >= 21 or user_date[1] == 'April,' and day <= 19:
+    sign = 'Aries'
+elif user_date[1] == 'April,' and day >= 20 or user_date[1] == 'May,' and day <= 20:
+    sign = 'Taurus'
+elif user_date[1] == 'May,' and day >= 21 or user_date[1] == 'June,' and day <= 20:
+    sign = 'Gemini'
+elif user_date[1] == 'June,' and day >= 21 or user_date[1] == 'July,' and day <= 22:
+    sign = 'Cancer'
+elif user_date[1] == 'July,' and day >= 23 or user_date[1] == 'August,' and day <= 22:
+    sign = 'Leo'
+elif user_date[1] == 'August,' and day >= 23 or user_date[1] == 'September,' and day <= 22:
+    sign = 'Virgo'
+elif user_date[1] == 'September,' and day >= 23 or user_date[1] == 'October,' and day <= 22:
+    sign = 'Libra'
+elif user_date[1] == 'October,' and day >= 23 or user_date[1] == 'November,' and day <= 21:
+    sign = 'Scorpio'
+elif user_date[1] == 'November,' and day >= 22 or user_date[1] == 'December,' and day <= 21:
+    sign = 'Sagittarius'
+elif user_date[1] == 'December,' and day >= 22 or user_date[1] == 'January,' and day <= 19:
+    sign = 'Capricorn'
+elif user_date[1] == 'January,' and day >= 20 or user_date[1] == 'February,' and day <= 19:
+    sign = 'Aquarius'
+else:
+    sign = 'Pisces'
+
+## Add the ending to the number for formatting
+if day >= 4 and day <= 20 or day >= 24 and day <= 30:
+    daystr = str(day)
+    daystr = (daystr + "th")
+elif day == 1 or day == 21 or day == 31: 
+    daystr = str(day)
+    daystr = (daystr + "st")
+elif day == 2 or day == 22:
+    daystr = str(day)
+    daystr = (daystr + "nd")
+elif day == 3 or day == 23:
+    daystr = str(day)
+    daystr = (daystr + "rd")
+
+
+# Determine if year is past or present
+if year < 2021:
+    past = True
+else:
+    past = False
+    
+# Display the output
+if is_holiday == True:
+    if past == True:
+        print("The", daystr, "of", user_date[1], user_date[2], "was a", day_of_week, "It was also", holiday, "The astrological sign of that date is", sign)
+    else:
+        print("The", daystr, "of", user_date[1], user_date[2], "will be on a", day_of_week, "It is also", holiday, "The astrological sign of that date is", sign)
+else:
+    if past == True:
+        print("The", daystr, "of", user_date[1], user_date[2], "was a", day_of_week, "The astrological sign of that date is", sign)
+    else:
+        print("The", daystr, "of", user_date[1], user_date[2], "is a", day_of_week, "The astrological sign of that date is", sign)    
